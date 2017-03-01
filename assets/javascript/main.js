@@ -2,7 +2,7 @@ $(document).ready(() => {
   let magnify = $('.magnify');
   let searchBar = $('.searchBar');
   let player = $('.player');
-  let x = $('.fa-times');
+  let x = $('.fa-chevron-down');
   let results = $('.searchResults');
 
   magnify.on('click', () => {
@@ -18,14 +18,12 @@ $(document).ready(() => {
     }
   });
 
-  x.on('click', () => {
-    console.log('clicked');
-    player.addClass('invisible');
+  x.on('click', (e) => {
+    e.stopPropagation();
+    player.toggleClass('minimized').toggleSlide();
   });
 
   results.on('click', 'li', thumbnailClick);
-
-
 });
 
 //performs an ajax request with value from input box, and calls displayResults on success
@@ -40,7 +38,7 @@ function search(){
         part: 'snippet',
         key: 'AIzaSyAaihODOctZXROz80ygr0E5y297jQ30tfM',
         order: 'viewCount',
-        q: `${val} vevo`,
+        q: `${val}`,
         safeSearch: 'none',
         type: 'video',
         videoDefinition: 'high',
@@ -74,6 +72,8 @@ function thumbnailClick(){
 
   h1.text(link.children('h2').text());
   youtubePlayer.src = url;
+  youtubePlayer.width = window.innerWidth * 0.8;
+  youtubePlayer.height = window.innerHeight * 0.8;
 
 
 }

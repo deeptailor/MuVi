@@ -36,28 +36,13 @@
     </div>
 
     <div class="player invisible">
-      <nav class="player-nav">
+      <div class="player-nav">
         <h1 class="player-title">Your Video is playing</h1>
-        <i class="fa fa-times" aria-hidden="true"></i>
-      </nav>
+        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+      </div>
 
-      <iframe id="ytplayer" type="text/html" width="640" height="360" frameborder="0"></iframe>
+      <iframe id="ytplayer" type="text/html" frameborder="0"></iframe>
     </div>
 
   </body>
-
-  <script>
-    $.ajax({
-      url: 'https://www.googleapis.com/youtube/v3/search',
-      data: {
-        part: 'snippet',
-        key: 'AIzaSyDAKDaBy_JDwcScSHqDQimOOLjdPImLanc',
-        order: 'relevance',
-        q: 'sex',
-        safeSearch: 'none',
-        type: 'video'
-      },
-      success: function(e){ console.log(e)}
-    });
-  </script>
 </html>

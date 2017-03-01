@@ -8,6 +8,10 @@ body{
 
 }
 
+i:hover{
+  cursor:pointer;
+}
+
 .main{
   background-image: url('https://media.giphy.com/media/6WtFOVgvnqMBa/giphy.gif');
   background-size: cover;
@@ -34,6 +38,7 @@ nav{
 }
 
 .searchBar-wrapper{
+  z-index: 1;
   font-size: 30px;
   color: white;
   display: flex;
@@ -93,12 +98,13 @@ nav{
   height: 100vh;
   background: rgba(0,0,0,0.7);
   color: white;
-  font-size: 35px;
+  font-size: 28px;
   z-index: 100;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: all 2s;
 }
 
 .invisible{
@@ -106,15 +112,55 @@ nav{
 }
 
 .player-nav{
+  position: relative;
+  top: -20px;
   background: none;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .player-nav > h1{
+  transition: all 1s;
   width: 90%;
   margin: 10px;
 }
 
 #ytplayer{
   position: static;
+  width: 80vw;
+  height: 80vh;
+}
 
+.minimized{
+  z-index: 0;
+  top: 90vh;
+  height: 10vh;
+}
+
+.minimized > .player-nav{
+  z-index: 0;
+}
+
+.minimized > .player-nav > h1{
+  visibility: hidden;
+}
+
+.minimized > .player-nav > i{
+  transform: rotate(180deg);
+  bottom: 10px;
+  right: 10px;
+  color: #7BFF14;
+  background-color: white;
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.minimized > #ytplayer{
+  height: 100%;
+}
+
+.fa {
+  transition: all 2s;
 }
