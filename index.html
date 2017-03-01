@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MuVi - Music Videos</title>
+
+    <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet">
+
+    <script src="https://use.fontawesome.com/3b4f7d56e1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous">
+    </script>
+    <script src="https://www.youtube.com/player_api"></script>
+    <script type="text/javascript" src="./assets/javascript/main.js"></script>
+
+
+  </head>
+  <body>
+    <div class="main">
+      <nav>
+        <div class="searchBar-wrapper">
+          <div class="magnify"><i class="fa fa-search" aria-hidden="true"></i></div>
+          <input class="searchBar" type="search" placeholder="Search">
+        </div>
+      </nav>
+      <div class="main-overlay">
+      </div>
+    </div>
+
+    <div class="results invisible">
+      <h1>Your Videos</h1>
+      <ul class="searchResults">
+      </ul>
+    </div>
+
+    <div class="player invisible">
+      <nav class="player-nav">
+        <h1 class="player-title">Your Video is playing</h1>
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </nav>
+
+      <iframe id="ytplayer" type="text/html" width="640" height="360" frameborder="0"></iframe>
+    </div>
+
+  </body>
+
+  <script>
+    $.ajax({
+      url: 'https://www.googleapis.com/youtube/v3/search',
+      data: {
+        part: 'snippet',
+        key: 'AIzaSyDAKDaBy_JDwcScSHqDQimOOLjdPImLanc',
+        order: 'relevance',
+        q: 'sex',
+        safeSearch: 'none',
+        type: 'video'
+      },
+      success: function(e){ console.log(e)}
+    });
+  </script>
+</html>
