@@ -4,7 +4,7 @@ body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: 'Cuprum', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 
 }
 
@@ -22,8 +22,28 @@ i:hover{
 .main-overlay{
   height: 100%;
   width: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 40px;
 }
+
+.main-overlay > h1{
+  margin: 0 20px;
+}
+
+.main-overlay > h2{
+  margin: 20px;
+  font-size: 20px;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+
 
 nav{
   position: fixed;
@@ -32,12 +52,28 @@ nav{
   width: 100%;
   height: 50px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background: rgba(0,0,0,0.7);
 }
 
+.logo{
+  margin: 20px;
+  font-size: 32px;
+  font-family: 'Paytone One', sans-serif;
+  color: white;
+}
+
+.logo-symbol{
+  color: #00ff4a;
+}
+
+.logo-symbol > span{
+  color: #00c3ff;
+}
+
 .searchBar-wrapper{
+  margin: 20px;
   z-index: 1;
   font-size: 30px;
   color: white;
@@ -58,6 +94,31 @@ nav{
   border-bottom: 1px solid #7BFF14;
 }
 
+.searchButton{
+  color: black;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 10px;
+  background: white;
+}
+
+.searchButton:hover{
+  cursor: pointer;
+}
+
+.contact{
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+  margin-right: 30px;
+  color: white;
+  font-size: 16px;
+}
+
+.contact > li:hover{
+  cursor: pointer;
+  transform: scale(1.2);
+}
 .results{
   width: 90%;
   color: white;
@@ -96,7 +157,7 @@ nav{
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.9);
   color: white;
   font-size: 28px;
   z-index: 100;
@@ -125,6 +186,7 @@ nav{
   transition: all 1s;
   width: 90%;
   margin: 10px;
+  font-size: 18px;
 }
 
 #ytplayer{

@@ -1,11 +1,18 @@
 $(document).ready(() => {
+  let searchWrapper = $('.searchBar-wrapper');
   let magnify = $('.magnify');
   let searchBar = $('.searchBar');
   let player = $('.player');
   let x = $('.fa-chevron-down');
   let results = $('.searchResults');
+  let go = $('.searchButton');
+  let overlayInstructions = $('.overlay-instructions');
 
-  magnify.on('click', () => {
+  searchWrapper.on('click', () => {
+    searchBar.focus();
+  });
+
+  overlayInstructions.on('click', () => {
     searchBar.focus();
   });
 
@@ -18,17 +25,29 @@ $(document).ready(() => {
     }
   });
 
+  go.on('click', (e) => {
+    e.stopPropagation();
+    search();
+    $('.results').removeClass('invisible');
+    let position = $('.results').offset();
+    $('html, body').animate({scrollTop: position.top}, 1200);
+  });
+
   x.on('click', (e) => {
     e.stopPropagation();
-    player.toggleClass('minimized').toggleSlide();
+    player.toggleClass('minimized');
   });
 
   results.on('click', 'li', thumbnailClick);
 });
 
 //performs an ajax request with value from input box, and calls displayResults on success
-function search(){
+function search(def="vevo 2017"){
   let val = this.value || document.querySelector('.searchBar').value;
+
+  if(!val){
+    val = def;
+  }
 
   console.log(val);
   window.setTimeout(() => {
@@ -54,7 +73,11 @@ function search(){
 function displayResults(data){
   const searchResults = $('.searchResults');
 
-  let html = data.items? data.items.map(item => `<li class="video-thumbnails" data-id=${item.id.videoId}><img src=${item.snippet.thumbnails.high.url}><h2>${item.snippet.title}</h2></li>`) : '';
+  let html = data.items? data.items.map(item =>
+    `<li class="video-thumbnails" data-id=${item.id.videoId}>
+        <img src=${item.snippet.thumbnails.high.url}>
+        <h2>${item.snippet.title}</h2>
+    </li>`) : '';
 
   if (data.length === 0){
     html = `<li>No Results Found</li>`;
