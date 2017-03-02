@@ -62,14 +62,7 @@ nav{
   font-size: 32px;
   font-family: 'Paytone One', sans-serif;
   color: white;
-}
-
-.logo-symbol{
-  color: #00ff4a;
-}
-
-.logo-symbol > span{
-  color: #00c3ff;
+  font-family: 'Russo One', sans-serif;
 }
 
 .searchBar-wrapper{
