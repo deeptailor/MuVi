@@ -21,17 +21,7 @@ Users can search for their favorite music videos in the most minimalistic way. J
 Users can minimize the player and continue to listen to their favorite songs while searching for what to play next.
 
 ![MuVi home page: http://www.deeptailor.com/MuVi][search]
-
-###Following playlists
-
-Users can follow playlists. Following other playlists add those playlists to the "Followed Playlists" tab.
-
-On the backend, these follows are handled by a PlaylistFollows join table, which track `user_id` and `playlist_id`. The tables are indexed on `user_id` to make it quick to fetch the playlists the currently signed in user follows.
-
-Custom API calls are made when users click 'follow' and 'unfollow' links on the frontend that create and destroy these follow associations.
-
-![Pauseplay tracks page: http://www.pauseplay.com/][search1]
-![Pauseplay tracks page: http://www.pauseplay.com/][search2]
+![MuVi home page: http://www.deeptailor.com/MuVi][search1]
 
 
 ###User Experience
@@ -52,6 +42,5 @@ MuVi was designed and built in under 2 days, and as such there's still a lot of 
 [prodlink]: http://www.deeptailor.com/MuVi
 [home page]: ./assets/images/muvi-giphy.gif "Muvi home page"
 [home page still]: ./assets/images/MuVi1.jpeg "Muvi home page still"
-[search]: ./assets/images/MuVi2.jpeg "Muvi Search"
-[search1]: ./assets/images/MuVi3.jpeg "Muvi Search1"
-[search2]: ./assets/images/MuVi4.jpeg "Muvi Search2"
+[search]: ./assets/images/MuVi3.jpeg "Muvi Search"
+[search1]: ./assets/images/MuVi4.jpeg "Muvi Search1"
