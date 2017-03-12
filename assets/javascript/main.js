@@ -24,6 +24,7 @@ $(document).ready(() => {
 
   searchBar.keypress((e) => {
     if(e.which == 13){
+      whichPage.pageNumber = 1;
       search();
       $('.results').removeClass('invisible');
       let position = $('.results').offset();
@@ -33,6 +34,7 @@ $(document).ready(() => {
 
   go.on('click', (e) => {
     e.stopPropagation();
+    whichPage.pageNumber = 1;
     search();
     $('.results').removeClass('invisible');
   });
@@ -90,6 +92,9 @@ function displayResults(data){
   const pageNumber = $('.pageNumber');
   let position = $('.results').offset();
   $('html, body').animate({scrollTop: position.top}, 1200);
+
+  console.log(data.items[0]);
+
   let html = data.items? data.items.map(item =>
     `<li class="video-thumbnails" data-id=${item.id.videoId}>
         <img src=${item.snippet.thumbnails.high.url}>
