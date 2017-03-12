@@ -1,3 +1,6 @@
+var whichPage = {};
+whichPage.pageNumber = 1;
+
 $(document).ready(() => {
   let searchWrapper = $('.searchBar-wrapper');
   let magnify = $('.magnify');
@@ -7,6 +10,9 @@ $(document).ready(() => {
   let results = $('.searchResults');
   let go = $('.searchButton');
   let overlayInstructions = $('.overlay-instructions');
+  let nextPage = $('.fa-chevron-right');
+  let prevPage = $('.fa-chevron-left');
+
 
   searchWrapper.on('click', () => {
     searchBar.focus();
@@ -29,8 +35,6 @@ $(document).ready(() => {
     e.stopPropagation();
     search();
     $('.results').removeClass('invisible');
-    let position = $('.results').offset();
-    $('html, body').animate({scrollTop: position.top}, 1200);
   });
 
   x.on('click', (e) => {
@@ -39,33 +43,38 @@ $(document).ready(() => {
   });
 
   results.on('click', 'li', thumbnailClick);
+  nextPage.on('click', pageClick('next'));
+  prevPage.on('click', pageClick('prev'));
+
 });
 
 //performs an ajax request with value from input box, and calls displayResults on success
-function search(def){
+function search(def = {}){
   let date = new Date();
   let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  def = def || `top 50 songs of the week ${months[date.getMonth()]} ${date.getFullYear()}`;
-
+  def.string = def.string || `top 50 songs of the week ${months[date.getMonth()]} ${date.getFullYear()}`;
+  var order = 'viewCount';
   let val = this.value || document.querySelector('.searchBar').value;
+  let whichPage = def.pageToken;
 
   if(!val){
-    val = def;
+    val = def.string;
+    order = 'date';
   }
 
-  console.log(val);
   window.setTimeout(() => {
     $.ajax({
       url: 'https://www.googleapis.com/youtube/v3/search',
       data: {
         part: 'snippet',
         key: 'AIzaSyAaihODOctZXROz80ygr0E5y297jQ30tfM',
-        order: 'viewCount',
+        order: order,
         q: `${val}`,
         safeSearch: 'none',
         type: 'video',
         videoDefinition: 'high',
-        maxResults: 50
+        maxResults: 50,
+        pageToken: whichPage
       },
       success: displayResults,
       error: (e) => console.log(e)
@@ -75,8 +84,12 @@ function search(def){
 
 //accepts data in form of an object, maps it to a html string and adds li's to search list
 function displayResults(data){
+  whichPage.nextPageToken = data.nextPageToken;
+  whichPage.prevPageToken = data.prevPageToken;
   const searchResults = $('.searchResults');
-
+  const pageNumber = $('.pageNumber');
+  let position = $('.results').offset();
+  $('html, body').animate({scrollTop: position.top}, 1200);
   let html = data.items? data.items.map(item =>
     `<li class="video-thumbnails" data-id=${item.id.videoId}>
         <img src=${item.snippet.thumbnails.high.url}>
@@ -88,6 +101,7 @@ function displayResults(data){
   }
 
   searchResults.html(html);
+  pageNumber.html(whichPage.pageNumber);
 }
 
 function thumbnailClick(){
@@ -101,4 +115,16 @@ function thumbnailClick(){
   youtubePlayer.src = url;
   youtubePlayer.width = window.innerWidth * 0.8;
   youtubePlayer.height = window.innerHeight * 0.8;
+}
+
+function pageClick(string){
+  return () => {
+    if(string === 'next'){
+      whichPage.pageNumber++;
+      search({pageToken: whichPage.nextPageToken});
+    } else if(string === 'prev'){
+      whichPage.pageNumber--;
+      search({pageToken: whichPage.prevPageToken});
+    }
+  }
 }
