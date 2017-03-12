@@ -42,7 +42,11 @@ $(document).ready(() => {
 });
 
 //performs an ajax request with value from input box, and calls displayResults on success
-function search(def="vevo 2017"){
+function search(def){
+  let date = new Date();
+  let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  def = def || `top 50 songs of the week ${months[date.getMonth()]} ${date.getFullYear()}`;
+
   let val = this.value || document.querySelector('.searchBar').value;
 
   if(!val){
@@ -97,6 +101,4 @@ function thumbnailClick(){
   youtubePlayer.src = url;
   youtubePlayer.width = window.innerWidth * 0.8;
   youtubePlayer.height = window.innerHeight * 0.8;
-
-
 }
