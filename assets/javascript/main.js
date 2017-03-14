@@ -48,6 +48,18 @@ $(document).ready(() => {
   nextPage.on('click', pageClick('next'));
   prevPage.on('click', pageClick('prev'));
 
+  const p = document.getElementById('player');
+  p.onmouseup = function(e){
+    e.stopPropagation();
+    if(document.getSelection){
+      let term = document.getSelection().toString();
+      if(term !== ''){
+        searchBar.val(term);
+        search({string: term, override:true});
+      }
+    }
+  }
+
 });
 
 //performs an ajax request with value from input box, and calls displayResults on success
@@ -62,6 +74,10 @@ function search(def = {}){
   if(!val){
     val = def.string;
     order = 'date';
+  }
+
+  if(def.override){
+    val = def.string;
   }
 
   window.setTimeout(() => {
@@ -82,6 +98,7 @@ function search(def = {}){
       error: (e) => console.log(e)
     });
   }, 200);
+
 }
 
 //accepts data in form of an object, maps it to a html string and adds li's to search list
@@ -92,8 +109,9 @@ function displayResults(data){
   const pageNumber = $('.pageNumber');
   let position = $('.results').offset();
   $('html, body').animate({scrollTop: position.top}, 1200);
+  $('.player').addClass('minimized');
 
-  console.log(data.items[0]);
+  //console.log(data.items[0]);
 
   let html = data.items? data.items.map(item =>
     `<li class="video-thumbnails" data-id=${item.id.videoId}>
@@ -111,6 +129,7 @@ function displayResults(data){
 
 function thumbnailClick(){
   $('.player').removeClass('invisible');
+  $('.player').removeClass('minimized');
   let link = $(this);
   let h1 = $('.player-title');
   let youtubePlayer = document.querySelector('#ytplayer');
