@@ -1,5 +1,7 @@
 var whichPage = {};
 whichPage.pageNumber = 1;
+var onYouTubeIframeAPIReady;
+window.playlist = [];
 
 $(document).ready(() => {
   let searchWrapper = $('.searchBar-wrapper');
@@ -12,6 +14,42 @@ $(document).ready(() => {
   let overlayInstructions = $('.overlay-instructions');
   let nextPage = $('.fa-chevron-right');
   let prevPage = $('.fa-chevron-left');
+  let button = $('.buttons');
+
+  /* Trying Youtube iframe api */
+
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[1];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+
+  onYouTubeIframeAPIReady = function () {
+    // console.log('player created')
+    window.ytPlayer = new YT.Player('ytplayer', {
+      height: '390',
+      width: '640',
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function onPlayerReady(event) {
+    // console.log('player ready');
+  }
+
+  function onPlayerStateChange(event) {
+    if(event.data === 0){
+      if(window.playlist.length){
+        var nextSong = window.playlist.shift();
+        window.ytPlayer.loadVideoById(nextSong);
+      }
+    }
+  }
+
+  /* End Youtube Api*/
 
 
   searchWrapper.on('click', () => {
@@ -45,6 +83,7 @@ $(document).ready(() => {
   });
 
   results.on('click', 'li', thumbnailClick);
+  results.on('click', '.buttons', playlistAddClick);
   nextPage.on('click', pageClick('next'));
   prevPage.on('click', pageClick('prev'));
 
@@ -115,7 +154,12 @@ function displayResults(data){
 
   let html = data.items? data.items.map(item =>
     `<li class="video-thumbnails" data-id=${item.id.videoId}>
-        <img src=${item.snippet.thumbnails.high.url}>
+        <div>
+          <img src=${item.snippet.thumbnails.high.url}>
+          <div class="buttons" data-id=${item.id.videoId}>
+            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+          </div>
+        </div>
         <h2>${item.snippet.title}</h2>
     </li>`) : '';
 
@@ -127,18 +171,26 @@ function displayResults(data){
   pageNumber.html(whichPage.pageNumber);
 }
 
+function playlistAddClick(e){
+  e.stopPropagation();
+
+  let videoId = $(this).data('id');
+  window.playlist.push(videoId);
+}
+
 function thumbnailClick(){
+
   $('.player').removeClass('invisible');
   $('.player').removeClass('minimized');
-  let link = $(this);
+
   let h1 = $('.player-title');
   let youtubePlayer = document.querySelector('#ytplayer');
+  let link = $(this);
   let url = `https://www.youtube.com/embed/${link.data('id')}?autoplay=1&origin="https://www.example.com"`;
 
   h1.text(link.children('h2').text());
-  youtubePlayer.src = url;
-  youtubePlayer.width = window.innerWidth * 0.8;
-  youtubePlayer.height = window.innerHeight * 0.8;
+
+  window.ytPlayer.loadVideoById(link.data('id'));
 }
 
 function pageClick(string){

@@ -135,13 +135,41 @@ nav{
   margin: 20px;
 }
 
-.video-thumbnails > img{
+.video-thumbnails > div{
+  position: relative;
+}
+
+.video-thumbnails > div > img{
   width: 100%;
+}
+
+.video-thumbnails > div > .buttons{
+  box-sizing: border-box;
+  position: absolute;
+  top: 20px;
+  right: 0;
+  background: rgba(0,0,0,1);
+  border-radius: 0 0 0 10px;
+  visibility: hidden;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 10px;
+  font-size: 30px;
+}
+
+.buttons > .fa{
+  padding: 0 5px;
+  transition: 0s;
 }
 
 .video-thumbnails:hover{
   transform: scale(1.2, 1.2);
   cursor: pointer;
+}
+
+.video-thumbnails:hover > div > .buttons{
+  visibility: visible;
 }
 
 .player{
