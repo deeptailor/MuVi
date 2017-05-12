@@ -43,8 +43,13 @@ $(document).ready(() => {
   function onPlayerStateChange(event) {
     if(event.data === 0){
       if(window.playlist.length){
-        var nextSong = window.playlist.shift();
+        var nextSongObject = window.playlist.shift();
+        var nextSong = nextSongObject.videoId;
+        var nextTitle = decodeURI(nextSongObject.title);
+
         window.ytPlayer.loadVideoById(nextSong);
+
+        $('.player-title').text(nextTitle);
       }
     }
   }
@@ -156,7 +161,7 @@ function displayResults(data){
     `<li class="video-thumbnails" data-id=${item.id.videoId}>
         <div>
           <img src=${item.snippet.thumbnails.high.url}>
-          <div class="buttons" data-id=${item.id.videoId}>
+          <div class="buttons" data-id=${item.id.videoId} data-title=${encodeURI(item.snippet.title)}>
             <i class="fa fa-plus-square-o" aria-hidden="true"></i>
           </div>
         </div>
@@ -175,7 +180,8 @@ function playlistAddClick(e){
   e.stopPropagation();
 
   let videoId = $(this).data('id');
-  window.playlist.push(videoId);
+  let title = $(this).data('title')
+  window.playlist.push({videoId: videoId, title: title});
 }
 
 function thumbnailClick(){
