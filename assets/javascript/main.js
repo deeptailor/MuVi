@@ -182,6 +182,8 @@ function playlistAddClick(e){
   let videoId = $(this).data('id');
   let title = $(this).data('title')
   window.playlist.push({videoId: videoId, title: title});
+
+  $(this).html('<i class="fa fa-check-square" aria-hidden="true"></i>').css('color', '#17FF00');
 }
 
 function thumbnailClick(){
