@@ -147,6 +147,9 @@ function pageClick(string){
       whichPage.pageNumber++;
       search({pageToken: whichPage.nextPageToken});
     } else if(string === 'prev'){
+      if(whichPage.pageNumber === 1){
+        return;
+      }
       whichPage.pageNumber--;
       search({pageToken: whichPage.prevPageToken});
     }
