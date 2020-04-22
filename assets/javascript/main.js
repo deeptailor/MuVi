@@ -129,7 +129,7 @@ function search(def = {}){
       url: 'https://www.googleapis.com/youtube/v3/search',
       data: {
         part: 'snippet',
-        key: 'AIzaSyBn4l_ni8mBox6unwz7-TL5US5LhuT6gHg',
+        key: 'AIzaSyBuejTtowhOqWaBvdgU-JFkctevZlUtOzE',
         order: order,
         q: `${val}`,
         safeSearch: 'none',
